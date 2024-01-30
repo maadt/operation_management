@@ -34,26 +34,25 @@
 	</select>
 	<select id="findById" resultMap="carMap">
 		SELECT
-		C.ID<!-- 一意性の識別のため必要 -->
-		,C.NAME
-		,C.PASSENGERS
-		,D.ID AS D_ID
-		,D.NAME AS D_NAME
-		,CU.ID AS CU_ID
-		,CU.NAME AS CU_NAME
+			C.ID<!-- 一意性の識別のため必要 -->
+			,C.NAME
+			,C.PASSENGERS
+			,D.ID AS D_ID
+			,D.NAME AS D_NAME
+			,CU.ID AS CU_ID
+			,CU.NAME AS CU_NAME
 		FROM
-		CARS AS C
-		INNER JOIN
-		DRIVERS AS D
+			CARS AS C
+		INNER JOIN<!-- 両方のテーブルでマッチするレコードが存在する場合にのみ結果を返す -->
+			DRIVERS AS D
 		ON
-		C.ID =
-		D.CARS_ID
-		INNER JOIN
-		CUSTOMERS AS CU
+			C.ID = D.CARS_ID
+		LEFT OUTER JOIN<!-- 顧客が存在しない車両については、顧客関連の情報（CU_ID、CU_NAME）は NULL として返される -->
+			CUSTOMERS AS CU
 		ON
-		C.ID = CU.CARS_ID
+			C.ID = CU.CARS_ID
 		WHERE
-		C.ID = #{id}
+			C.ID = #{id}
 	</select>
 	<insert id="insert" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="id">
