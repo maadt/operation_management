@@ -21,6 +21,10 @@ public class CarService {
 		return this.carMapper.findAll();
 	}
 	
+	public Car findById(Integer id) {
+		 return this.carMapper.findById(id);
+	}
+	
 	public void insert(String name, Integer passengers) {
 		 Car car = new Car();
 		 car.setName(name);

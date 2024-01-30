@@ -8,9 +8,13 @@
 		<result column="NAME" property="name" />
 		<result column="PASSENGERS" property="passengers" />
 	</resultMap>
-
 	<select id="findAll" resultMap="carMap">
 		SELECT * FROM CARS
+	</select>
+	<select id="findById" resultMap="carMap">
+		SELECT * FROM cars
+		WHERE id =
+		#{id}
 	</select>
 	<insert id="insert" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="id">
@@ -18,4 +22,8 @@
 		(nextval('car_id_seq'),
 		#{name}, #{passengers})
 	</insert>
+	<update id="update">
+		UPDATE cars SET name = #{name}, passengers =
+		#{passengers} WHERE id = #{id}
+	</update>
 </mapper>
