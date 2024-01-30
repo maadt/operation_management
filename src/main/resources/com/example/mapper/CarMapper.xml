@@ -10,6 +10,17 @@
 	</resultMap>
 	<select id="findAll" resultMap="carMap">
 		SELECT * FROM CARS
+		<where>
+			<if test="carId != null">
+				id = #{carId}
+			</if>
+			<if test="carName != null">
+				OR name = #{carName}
+			</if>
+			<if test="carPassengers != null">
+				OR name = #{carPassengers}
+			</if>
+		</where>
 	</select>
 	<select id="findById" resultMap="carMap">
 		SELECT * FROM cars

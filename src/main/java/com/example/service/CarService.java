@@ -17,8 +17,8 @@ public class CarService {
 		this.carMapper = carMapper;
 	}
 	
-	public List<Car> findAll() {
-		return this.carMapper.findAll();
+	public List<Car> findAll(Integer id, String name, Integer passengers) {
+		return this.carMapper.findAll(id, name, passengers);
 	}
 	
 	public Car findById(Integer id) {

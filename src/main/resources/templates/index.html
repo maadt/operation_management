@@ -5,6 +5,22 @@
     <title>車両一覧表示</title>
 </head>
 <body>
+	<h1>検索フォーム</h1>
+    <form th:action="@{/index}" method="get">
+        <div>
+            <label>車両ID</label>
+            <input type="number" name="carId">
+        </div>
+        <div>
+            <label>車両名</label>
+            <input type="text" name="carName">
+        </div>
+        <div>
+            <label>乗員数</label>
+            <input type="number" name="carPassengers">
+        </div>
+        <input type="submit" value="検索">
+    </form>
     <h1>車両一覧表示</h1>
     <div>
         <a href="/create">新規登録</a>
