@@ -9,7 +9,6 @@ import com.example.entity.Car;
 
 @Mapper
 public interface CarMapper {
-	public List<Car> findAll();
     public List<Car> findAll(@Param("carId") Integer id,
     		                 @Param("carName") String name,
     		                 @Param("carPassengers") Integer passengers);
