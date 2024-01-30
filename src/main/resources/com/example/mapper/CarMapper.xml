@@ -26,4 +26,7 @@
 		UPDATE cars SET name = #{name}, passengers =
 		#{passengers} WHERE id = #{id}
 	</update>
+	<delete id="deleteById">
+		DELETE FROM cars WHERE id = #{id}
+	</delete>
 </mapper>

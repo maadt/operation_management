@@ -44,4 +44,16 @@ public class CarController {
 	    model.addAttribute("id", id);
 	    return "edit";
 	 }
+	
+	@PostMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Integer id, @ModelAttribute CarForm carForm) {
+	    this.carService.update(id, carForm.getName(), carForm.getPassengers());
+	    return "redirect:/index";
+	}
+	
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Integer id) {
+		this.carService.deleteById(id);
+		return "redirect:/index";
+	}
 }
