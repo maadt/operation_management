@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CarMapper">
+	<resultMap type="com.example.entity.Car" id="carMap">
+		<id column="ID" property="id" />
+		<result column="NAME" property="name" />
+		<result column="PASSENGERS" property="passengers" />
+		<association property="driver"
+			javaType="com.example.entity.Driver">
+			<id column="D_ID" property="id" />
+			<result column="NAME" property="name" />
+		</association>
+		<collection property="customers"
+			ofType="com.example.entity.Customer">
+			<id column="CU_ID" property="id" />
+			<result column="CU_NAME" property="name" />
+		</collection>
+	</resultMap>
+	<select id="findAll" resultMap="carMap">
+		SELECT * FROM CARS
+		<where>
+			<if test="carId != null">
+				id = #{carId}
+			</if>
+			<if test="carName != null">
+				OR name = #{carName}
+			</if>
+			<if test="carPassengers != null">
+				OR passengers = #{carPassengers}
+			</if>
+		</where>
+	</select>
+	<select id="findById" resultMap="carMap">
+		SELECT
+			C.ID<!-- 一意性の識別のため必要 -->
+			,C.NAME
+			,C.PASSENGERS
+			,D.ID AS D_ID
+			,D.NAME AS D_NAME
+			,CU.ID AS CU_ID
+			,CU.NAME AS CU_NAME
+		FROM
+			CARS AS C
+		INNER JOIN<!-- 両方のテーブルでマッチするレコードが存在する場合にのみ結果を返す -->
+			DRIVERS AS D
+		ON
+			C.ID = D.CARS_ID
+		LEFT OUTER JOIN<!-- 顧客が存在しない車両については、顧客関連の情報（CU_ID、CU_NAME）は NULL として返される -->
+			CUSTOMERS AS CU
+		ON
+			C.ID = CU.CARS_ID
+		WHERE
+			C.ID = #{id}
+	</select>
+	<insert id="insert" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id">
+		INSERT INTO cars (id, name, passengers) VALUES
+		(nextval('car_id_seq'),
+		#{name}, #{passengers})
+	</insert>
+	<update id="update">
+		UPDATE cars SET name = #{name}, passengers =
+		#{passengers} WHERE id = #{id}
+	</update>
+	<delete id="deleteById">
+		DELETE FROM cars WHERE id = #{id}
+	</delete>
+</mapper>
