@@ -37,5 +37,23 @@
             </tr>
         </tbody>
     </table>
+    <h1>新規登録フォーム</h1>
+    <form th:action="@{/create}" method="post" th:object="${carForm}">
+        <div>
+            <label>車両名</label>
+        </div>
+        <div>
+            <input th:field="*{name}" type="text" placeholder="車両名を入力してください">
+        </div>
+        <div>
+            <label>乗員数</label>
+        </div>
+        <div>
+            <input th:field="*{passengers}" type="number" placeholder="乗員数を入力してください">
+        </div>
+        <div>
+            <input type="submit" value="登録する">
+        </div>
+    </form>
 </body>
 </html>
