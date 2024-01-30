@@ -7,6 +7,11 @@
 		<id column="ID" property="id" />
 		<result column="NAME" property="name" />
 		<result column="PASSENGERS" property="passengers" />
+		<association property="driver"
+			javaType="com.example.entity.Driver">
+			<id column="D_ID" property="id" />
+			<result column="NAME" property="name" />
+		</association>
 	</resultMap>
 	<select id="findAll" resultMap="carMap">
 		SELECT * FROM CARS
@@ -23,9 +28,19 @@
 		</where>
 	</select>
 	<select id="findById" resultMap="carMap">
-		SELECT * FROM cars
-		WHERE id =
-		#{id}
+		SELECT
+		C.NAME
+		,C.PASSENGERS
+		,D.ID AS D_ID
+		,D.NAME
+		FROM
+		CARS AS C
+		INNER JOIN
+		DRIVERS AS D
+		ON
+		C.ID = D.ID
+		WHERE
+		C.ID = #{id}
 	</select>
 	<insert id="insert" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="id">
