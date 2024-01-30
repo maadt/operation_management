@@ -29,14 +29,15 @@
 	</select>
 	<select id="findById" resultMap="carMap">
 		SELECT
-		C.ID
+		C.ID<!-- 一意性の識別のため必要 -->
 		,C.NAME
 		,C.PASSENGERS
 		,D.ID AS D_ID
 		,D.NAME AS D_NAME
 		FROM
 		CARS AS C
-		INNER JOIN
+		INNER
+		JOIN
 		DRIVERS AS D
 		ON
 		D.CARS_ID = C.ID
